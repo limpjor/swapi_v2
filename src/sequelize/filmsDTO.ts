@@ -2,13 +2,13 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from './sequelizeConfig';
 import VehicleDTO from './vehicleDTO';
 
-class PilotDTO extends Model {
+class FilmsDTO extends Model {
   public id!: number;
   public id_vehiculo!: number;
   public url!: string;
 }
 
-PilotDTO.init(
+FilmsDTO.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -27,11 +27,11 @@ PilotDTO.init(
   {
     sequelize,
     modelName: 'Pilot',
-    tableName: 'pilotos',
+    tableName: 'peliculas',
     timestamps: false,
   }
 );
 
-PilotDTO.belongsTo(VehicleDTO, { foreignKey: 'id_vehiculo' }); // Define la relación con la tabla vehicles
+FilmsDTO.belongsTo(VehicleDTO, { foreignKey: 'id_vehiculo' }); // Define la relación con la tabla vehicles
 
-export default PilotDTO;
+export default FilmsDTO;

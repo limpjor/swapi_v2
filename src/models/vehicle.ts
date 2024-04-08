@@ -1,17 +1,18 @@
 
 interface Vehicle {
+    id:number;
     nombre: string;
     modelo: string;
-    clase_vehículo: string;
+    clase_vehiculo: string;
     fabricante: string;
     longitud: string;
-    costo_en_créditos: string;
-    tripulación: string;
+    costo_creditos: string;
+    tripulacion: string;
     pasajeros: string;
-    velocidad_máxima_en_atmósfera: string;
-    capacidad_de_carga: string;
+    velocidad_maxima_atmosfera: string;
+    capacidad_carga: string;
     consumibles: string;
-    películas: string[];
+    peliculas: string[];
     pilotos: string[];
     url: string;
     creado: string;
