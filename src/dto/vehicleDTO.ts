@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from './sequelizeConfig';
+import sequelize from '../../sequelizeConfig';
 
 class VehicleDTO extends Model {
   public id!: number;

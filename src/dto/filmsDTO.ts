@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from './sequelizeConfig';
+import sequelize from '../../sequelizeConfig';
 import VehicleDTO from './vehicleDTO';
 
 class FilmsDTO extends Model {

@@ -1,8 +1,8 @@
 
 import axios from 'axios';
-import FilmsDTO from 'src/sequelize/filmsDTO';
-import PilotDTO from 'src/sequelize/pilotsDTO';
-import VehicleDTO from 'src/sequelize/vehicleDTO';
+import FilmsDTO from 'src/dto/filmsDTO';
+import PilotDTO from 'src/dto/pilotsDTO';
+import VehicleDTO from 'src/dto/vehicleDTO';
 
 export class VehiclesServices {
 
