@@ -4,11 +4,11 @@ import FilmsDTO from 'src/sequelize/filmsDTO';
 import PilotDTO from 'src/sequelize/pilotsDTO';
 import VehicleDTO from 'src/sequelize/vehicleDTO';
 
-export class VehiclesServices{
+export class VehiclesServices {
 
-  async getVehiclesById (id: string): Promise<Vehicle> {
+  async getVehiclesById(id: string): Promise<Vehicle> {
     const response = await axios.get(`${process.env.API_URL}vehicles/${id}`);
-    return  {      
+    return {
       id: response.data.id,
       nombre: response.data.name,
       modelo: response.data.model,
@@ -28,9 +28,9 @@ export class VehiclesServices{
       editado: response.data.edited
     };
   }
-  async getAllVehicles (): Promise<Vehicle> {
+  async getAllVehicles(): Promise<Vehicle> {
     const response = await axios.get(`${process.env.API_URL}vehicles/`);
-    return response.data.results.map((vehicle: { id: any; name: any; model: any; vehicle_class: any; manufacturer: any; length: any; cost_in_credits: any; crew: any; passengers: any; max_atmosphering_speed: any; cargo_capacity: any; consumables: any; films: any; pilots: any; url: any; created: any; edited: any; }) => ({
+    return response.data.results.map((vehicle) => ({
       id: vehicle.id,
       nombre: vehicle.name,
       modelo: vehicle.model,
@@ -52,8 +52,8 @@ export class VehiclesServices{
   }
   async getAllVehiclesRds(): Promise<Vehicle[]> {
     const response = await VehicleDTO.findAll();
-    return response.map(vehicle => ({
-      id:vehicle.id,
+    return response.map((vehicle: VehicleDTO) => ({
+      id: vehicle.id,
       nombre: vehicle.nombre,
       modelo: vehicle.modelo,
       clase_vehiculo: vehicle.clase_vehiculo,
@@ -66,39 +66,36 @@ export class VehiclesServices{
       capacidad_carga: vehicle.capacidad_carga,
       consumibles: vehicle.consumibles,
       url: vehicle.url,
-      peliculas : [],
-      pilotos : [],
+      peliculas: [],
+      pilotos: [],
       creado: vehicle.creado,
       editado: vehicle.editado
     }));
   }
   async saveVehiclesRds(event: string): Promise<Vehicle> {
-    
-    let vehiculo = JSON.parse(event);
-    let peliculas : string [];
-    let pilotos : string[];
-    const response = await VehicleDTO.create(vehiculo);
-    console.log("vehiculo.peliculas:",vehiculo.peliculas);
 
-    vehiculo.peliculas.forEach(async (pelicula: string) => {
-      const film = {
-        id_vehiculo:response.id,
-        url:pelicula
-      };
-      await FilmsDTO.create(film);
+    let vehiculo = JSON.parse(event);
+    let peliculas: string[] = [];
+    let pilotos: string[] = [];
+    const response = await VehicleDTO.create(vehiculo);
+    await vehiculo.peliculas.forEach(async (pelicula: string) => {
+      await FilmsDTO.create({
+        id_vehiculo: response.id,
+        url: pelicula
+      });
       peliculas.push(pelicula);
     });
 
-    vehiculo.pilotos.forEach(async (piloto: string) => {
+    await vehiculo.pilotos.forEach(async (piloto: string) => {
       await PilotDTO.create({
-        id_vehiculo:response.id,
-        url:piloto
+        id_vehiculo: response.id,
+        url: piloto
       });
       pilotos.push(piloto);
     });
 
     return {
-      id:response.id,
+      id: response.id,
       nombre: response.nombre,
       modelo: response.modelo,
       clase_vehiculo: response.clase_vehiculo,
@@ -111,8 +108,8 @@ export class VehiclesServices{
       capacidad_carga: response.capacidad_carga,
       consumibles: response.consumibles,
       url: response.url,
-      peliculas : peliculas,
-      pilotos : pilotos,
+      peliculas: peliculas,
+      pilotos: pilotos,
       creado: response.creado,
       editado: response.editado
     };

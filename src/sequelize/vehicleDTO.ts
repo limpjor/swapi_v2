@@ -26,9 +26,7 @@ VehicleDTO.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    nombre: {
-      type: DataTypes.STRING,
-    },
+    nombre: DataTypes.STRING,
     modelo: DataTypes.STRING,
     clase_vehiculo: DataTypes.STRING,
     fabricante: DataTypes.STRING,

@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { VehiclesServices } from '../services/vehiclesService';
 
 
-export class VehiclesController{
+export class VehiclesController {
 
   private vehiclesServices: VehiclesServices;
 
@@ -30,7 +30,7 @@ export class VehiclesController{
     }
   }
 
-  async getAllVehicles (): Promise<APIGatewayProxyResult>{
+  async getAllVehicles(): Promise<APIGatewayProxyResult> {
     try {
       const vehicle = await this.vehiclesServices.getAllVehicles();
       return {
@@ -45,16 +45,16 @@ export class VehiclesController{
     }
   }
 
-  async getAllVehiclesRds (): Promise<APIGatewayProxyResult>{
+  async getAllVehiclesRds(): Promise<APIGatewayProxyResult> {
     try {
-     const vehicle = await this.vehiclesServices.getAllVehiclesRds();
-     console.log("vehicle:",vehicle)
+      const vehicle = await this.vehiclesServices.getAllVehiclesRds();
+      console.log("vehicle:", vehicle)
       return {
         statusCode: 200,
-        body: (vehicle!=null)?JSON.stringify(vehicle):vehicle,
+        body: (vehicle != null) ? JSON.stringify(vehicle) : vehicle,
       };
     } catch (error) {
-      console.log("error:",error)
+      console.log("error:", error)
       return {
         statusCode: 500,
         body: JSON.stringify({ message: 'Error retrieving character information' }),
@@ -62,18 +62,18 @@ export class VehiclesController{
     }
   }
 
-  async saveVehiclesRds (event): Promise<APIGatewayProxyResult>{
+  async saveVehiclesRds(event): Promise<APIGatewayProxyResult> {
     try {
       const vehicle = await this.vehiclesServices.saveVehiclesRds(event);
-       return {
-         statusCode: 200,
-         body: (vehicle!=null)?JSON.stringify(vehicle):vehicle,
-       };
-     } catch (error) {
-       return {
-         statusCode: 500,
-         body: JSON.stringify({ message: 'Error retrieving character information' }),
-       };
-     }
+      return {
+        statusCode: 200,
+        body: (vehicle != null) ? JSON.stringify(vehicle) : vehicle,
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ message: 'Error retrieving character information' }),
+      };
+    }
   }
 }

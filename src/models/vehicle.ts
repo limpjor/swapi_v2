@@ -1,6 +1,6 @@
 
 interface Vehicle {
-    id:number;
+    id: number;
     nombre: string;
     modelo: string;
     clase_vehiculo: string;
