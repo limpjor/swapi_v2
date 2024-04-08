@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import { where } from 'sequelize';
 import FilmsDTO from 'src/sequelize/filmsDTO';
 import PilotDTO from 'src/sequelize/pilotsDTO';
 import VehicleDTO from 'src/sequelize/vehicleDTO';
