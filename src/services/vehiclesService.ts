@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { where } from 'sequelize';
 import FilmsDTO from 'src/sequelize/filmsDTO';
 import PilotDTO from 'src/sequelize/pilotsDTO';
 import VehicleDTO from 'src/sequelize/vehicleDTO';
@@ -51,48 +52,60 @@ export class VehiclesServices {
     }));
   }
   async getAllVehiclesRds(): Promise<Vehicle[]> {
-    const response = await VehicleDTO.findAll();
-    return response.map((vehicle: VehicleDTO) => ({
-      id: vehicle.id,
-      nombre: vehicle.nombre,
-      modelo: vehicle.modelo,
-      clase_vehiculo: vehicle.clase_vehiculo,
-      fabricante: vehicle.fabricante,
-      longitud: vehicle.longitud,
-      costo_creditos: vehicle.costo_creditos,
-      tripulacion: vehicle.tripulacion,
-      pasajeros: vehicle.pasajeros,
-      velocidad_maxima_atmosfera: vehicle.velocidad_maxima_atmosfera,
-      capacidad_carga: vehicle.capacidad_carga,
-      consumibles: vehicle.consumibles,
-      url: vehicle.url,
-      peliculas: [],
-      pilotos: [],
-      creado: vehicle.creado,
-      editado: vehicle.editado
-    }));
-  }
-  async saveVehiclesRds(event: string): Promise<Vehicle> {
+    let vehicles = await VehicleDTO.findAll();
+    let promises = vehicles.map(async (vehicle: VehicleDTO) => {
+      let peliculas = await FilmsDTO.findAll({ where: { id_vehiculo: vehicle.id } });
+      let pilotos = await PilotDTO.findAll({ where: { id_vehiculo: vehicle.id } });
 
+      let peliculasUrls = peliculas.map(x => x.url);
+
+      let pilotosUrl = pilotos.map(x => x.url);
+
+      return {
+        id: vehicle.id,
+        nombre: vehicle.nombre,
+        modelo: vehicle.modelo,
+        clase_vehiculo: vehicle.clase_vehiculo,
+        fabricante: vehicle.fabricante,
+        longitud: vehicle.longitud,
+        costo_creditos: vehicle.costo_creditos,
+        tripulacion: vehicle.tripulacion,
+        pasajeros: vehicle.pasajeros,
+        velocidad_maxima_atmosfera: vehicle.velocidad_maxima_atmosfera,
+        capacidad_carga: vehicle.capacidad_carga,
+        consumibles: vehicle.consumibles,
+        url: vehicle.url,
+        peliculas: peliculasUrls,
+        pilotos: pilotosUrl,
+        creado: vehicle.creado,
+        editado: vehicle.editado
+      };
+    });
+
+    return Promise.all(promises);
+  }
+
+  async saveVehiclesRds(event: string): Promise<Vehicle> {
     let vehiculo = JSON.parse(event);
     let peliculas: string[] = [];
     let pilotos: string[] = [];
     const response = await VehicleDTO.create(vehiculo);
-    await vehiculo.peliculas.forEach(async (pelicula: string) => {
+
+    for (let pelicula of vehiculo.peliculas) {
       await FilmsDTO.create({
         id_vehiculo: response.id,
         url: pelicula
       });
       peliculas.push(pelicula);
-    });
+    }
 
-    await vehiculo.pilotos.forEach(async (piloto: string) => {
+    for (let piloto of vehiculo.pilotos) {
       await PilotDTO.create({
         id_vehiculo: response.id,
         url: piloto
       });
       pilotos.push(piloto);
-    });
+    }
 
     return {
       id: response.id,
