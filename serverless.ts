@@ -1,13 +1,14 @@
 import type { AWS } from '@serverless/typescript';
 
-
 const serverlessConfiguration: AWS = {
   service: 'swapi',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild','serverless-offline'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs20.x',
+    stage: 'dev',
+    region: 'us-east-1',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -15,8 +16,10 @@ const serverlessConfiguration: AWS = {
     environment: {
       API_URL: 'https://swapi.py4e.com/api/',
     },
+    deploymentBucket: {
+      name: 'swapi-dev-serverlessdeploymentbucket-xj3ncavhvb4c',
+    }
   },
-  // import the function via paths
   functions: {
     handler: {
       handler: 'src/handler.handler',
@@ -28,14 +31,16 @@ const serverlessConfiguration: AWS = {
       ],
     },
   },
-  package: { individually: true },
+  package: { 
+    individually: true 
+  },
   custom: {
     esbuild: {
       bundle: true,
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      target: 'node14',
+      target: 'node19',
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,

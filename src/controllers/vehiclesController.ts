@@ -1,4 +1,3 @@
-// src/controllers/charactersController.ts
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { VehiclesServices } from '../services/vehiclesService';
 
@@ -51,7 +50,7 @@ export class VehiclesController {
       console.log("vehicle:", vehicle)
       return {
         statusCode: 200,
-        body: (vehicle != null) ? JSON.stringify(vehicle) : vehicle,
+        body: (vehicle != null) ? JSON.stringify(vehicle) : null,
       };
     } catch (error) {
       console.log("error:", error)
@@ -67,7 +66,7 @@ export class VehiclesController {
       const vehicle = await this.vehiclesServices.saveVehiclesRds(event);
       return {
         statusCode: 200,
-        body: (vehicle != null) ? JSON.stringify(vehicle) : vehicle,
+        body: (vehicle != null) ? JSON.stringify(vehicle) : null,
       };
     } catch (error) {
       return {

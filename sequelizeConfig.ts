@@ -5,8 +5,8 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   database: 'swapi',
   username: 'admin',
-  password: 'njRa9Oi20n85D6e7D8ex',
-  host: 'databaseswapi.cvikwskgmzq2.us-east-1.rds.amazonaws.com',
+  password: 'pedir password, por seguridad no lo pongo',
+  host: 'pedir host, por seguridad no lo pongo',
   port: 3306, 
   define: {
     timestamps: false,
