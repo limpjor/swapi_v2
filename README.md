@@ -25,11 +25,6 @@ Depending on your preferred package manager, follow the instructions below to de
 
 ### using serverless-offline to test locally
 
-<<<<<<< HEAD
-### using serverless-offline to test locally
-
-=======
->>>>>>> 23d2ded (se configuro para poder hacer deploy)
 - Run `serverless offline` o `sls offline` o 
 
 ### Project structure
