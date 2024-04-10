@@ -15,15 +15,21 @@ Depending on your preferred package manager, follow the instructions below to de
 ### Using NPM
 
 - Run `npm i` to install the project dependencies
-- Run `npx sls deploy` to deploy this stack to AWS
+- Run `npm config` to deploy this stack to AWS
 
-### Using Yarn
-
-- Run `yarn` to install the project dependencies
-- Run `yarn sls deploy` to deploy this stack to AWS
+### apis deployed
+- GET - https://ji0lrnjt2j.execute-api.us-east-1.amazonaws.com/vehicle/{id}
+- GET - https://ji0lrnjt2j.execute-api.us-east-1.amazonaws.com/vehicle
+- GET - https://ji0lrnjt2j.execute-api.us-east-1.amazonaws.com/RDS/vehicle
+- POST - https://ji0lrnjt2j.execute-api.us-east-1.amazonaws.com/RDS/vehicle
 
 ### using serverless-offline to test locally
 
+<<<<<<< HEAD
+### using serverless-offline to test locally
+
+=======
+>>>>>>> 23d2ded (se configuro para poder hacer deploy)
 - Run `serverless offline` o `sls offline` o 
 
 ### Project structure

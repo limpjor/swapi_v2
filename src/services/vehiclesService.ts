@@ -1,8 +1,8 @@
 
 import axios from 'axios';
-import FilmsDTO from 'src/dto/filmsDTO';
-import PilotDTO from 'src/dto/pilotsDTO';
-import VehicleDTO from 'src/dto/vehicleDTO';
+import FilmsDTO from '../dto/filmsDTO';
+import PilotDTO from '../dto/pilotsDTO';
+import VehicleDTO from '../dto/vehicleDTO';
 
 export class VehiclesServices {
 
